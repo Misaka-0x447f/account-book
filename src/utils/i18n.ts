@@ -1,11 +1,18 @@
-const dict = {
-  en: {
-    intro: "Misaka is here to help.",
-    start: "Getting started with a copy of @/pages/Home/EmptyComponentTemplate.vue",
-    link: "vue-typescript-pug-stylus template by"
+const primaryDict = {
+  global: {
+    ok: "好"
+  },
+  welcome: {
+    welcome: "欢迎",
+    loginTip: "提供连接字符串以继续",
+    loginFieldSample: "mongodb://username:password@server.documents.azure.com:port/?ssl=true&replicaSet=globaldb",
+    loginInvalid: "不是有效的连接字符串",
+    loginRunning: "正在建立连接。此过程可能需要几分钟时间..."
   }
 };
 
-export default function say(word: keyof typeof dict.en): string {
-  return dict.en[word];
-}
+const alterDict: {
+  [T: string]: typeof primaryDict
+} = {};
+
+export {primaryDict as e};

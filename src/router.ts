@@ -10,13 +10,12 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect: "/home"
+      redirect: "/setup"
     },
     {
-      path: "/home",
-      name: "home",
-      // lazy load
-      component: () => import("./pages/Home/index.vue"),
+      path: "/setup",
+      name: "setup",
+      component: () => import("@/pages/setup/index.vue")
     }
   ],
 });
