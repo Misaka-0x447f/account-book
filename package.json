@@ -1,0 +1,38 @@
+{
+  "name": "misaka-vue-template",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "inspect-webpack-config": "vue-cli-service inspect > webpack-config-readable.txt"
+  },
+  "dependencies": {
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.6"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-typescript": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "style-resources-loader": "^1.2.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "tslint": "^5.16.0",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.4.5",
+    "vue-cli-plugin-pug": "^1.0.7",
+    "vue-template-compiler": "^2.6.10",
+    "webpack-cli": "^3.3.2"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
