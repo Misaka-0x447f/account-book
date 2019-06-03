@@ -6,7 +6,8 @@ const primaryDict = {
     welcome: "欢迎",
     loginTip: "提供连接字符串以继续",
     loginFieldSample: "mongodb://username:password@server.documents.azure.com:port/?ssl=true&replicaSet=globaldb",
-    loginInvalid: "不是有效的连接字符串",
+    loginInvalid: "不是有效的连接字符串。",
+    loginFailure: "建立连接的尝试失败了。",
     loginRunning: "正在建立连接。此过程可能需要几分钟时间..."
   }
 };

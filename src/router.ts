@@ -3,6 +3,11 @@ import Router from "vue-router";
 
 Vue.use(Router);
 
+export const routerName = {
+  setup: "setup",
+  dashboard: "dashboard"
+};
+
 // noinspection JSUnusedGlobalSymbols
 export default new Router({
   mode: "history",
@@ -14,8 +19,13 @@ export default new Router({
     },
     {
       path: "/setup",
-      name: "setup",
+      name: routerName.setup,
       component: () => import("@/pages/setup/index.vue")
+    },
+    {
+      path: "/dashboard",
+      name: routerName.dashboard,
+      component: () => import("@/pages/dashboard/index.vue")
     }
   ],
 });

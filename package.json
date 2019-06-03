@@ -9,11 +9,15 @@
     "inspect-webpack-config": "vue-cli-service inspect > webpack-config-readable.txt"
   },
   "dependencies": {
+    "lodash": "^4.17.11",
     "mongodb": "^3.2.5",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6"
   },
   "devDependencies": {
+    "@types/assert": "^1.4.2",
+    "@types/lodash": "^4.14.129",
+    "@types/mongodb": "^3.1.27",
     "@vue/cli-plugin-typescript": "^3.7.0",
     "@vue/cli-service": "^3.7.0",
     "style-resources-loader": "^1.2.1",
