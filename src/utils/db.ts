@@ -8,8 +8,8 @@ export const config = (connectString: string) => {
 
 export const validate = async (connectString: string) => {
   const connect = new AZ(connectString);
-  const res = await connect.createTableIfNotExist("asset");
+  const res = await connect.createContainerIfNotExists("rwtestfordriver");
   if (res.created) {
-    await connect.deleteTableIfExists("asset");
+    await connect.deleteContainerIfExists("rwtestfordriver");
   }
 };

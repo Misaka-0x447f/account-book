@@ -7,13 +7,13 @@ const primaryDict = {
     loginTip: "提供连接字符串以继续",
     loginFieldSample: "mongodb://username:password@server.documents.azure.com:port/?ssl=true&replicaSet=globaldb",
     loginInvalid: "不是有效的连接字符串。",
-    loginFailure: "建立连接的尝试失败了。",
+    loginFailure: "建立连接的尝试失败了。请确认是否已针对Blob允许CORS。",
     loginRunning: "正在建立连接。此过程可能需要几分钟时间..."
   }
 };
 
-const alterDict: {
-  [T: string]: typeof primaryDict
-} = {};
+// const alterDict: {
+//   [T: string]: typeof primaryDict
+// } = {};
 
 export {primaryDict as e};
