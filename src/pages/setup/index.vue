@@ -45,6 +45,7 @@
   import {e} from "@/utils/i18n";
   import {routerName} from "@/router";
   import {validate} from "@/utils/db";
+  import {azConnectStringSchema} from "@/interfaces";
 
   export default Vue.extend({
     name: "setup-index",
@@ -70,19 +71,18 @@
         this.val = v;
       },
       async clickHandler() {
-        // if (!mongoDBConnectingStringSchema.test(this.val)) {
-        //   this.status = -2;
-        //   return;
-        // }
-        await validate(this.val);
+        if (!azConnectStringSchema.test(this.val)) {
+          this.status = -2;
+          return;
+        }
         this.status = 1;
-        // try {
-        // await link(this.val);
-        this.status = 0;
-        this.$router.push({name: routerName.dashboard});
-        // } catch {
-        //   this.status = -1;
-        // }
+        try {
+          await validate(this.val);
+          this.status = 0;
+          this.$router.push({name: routerName.dashboard});
+        } catch {
+          this.status = -1;
+        }
       }
     }
   });
