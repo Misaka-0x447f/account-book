@@ -1,7 +1,7 @@
 <template lang="pug">
   div.root
     div.container
-      span dashboard
+      
 </template>
 <style lang="stylus" scoped>
 </style>
