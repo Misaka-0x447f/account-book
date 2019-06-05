@@ -21,5 +21,4 @@ yarn-error.log*
 *.sw*
 
 # Autogen files
-src/**/*.js
 src/**/*.js.map
