@@ -14,29 +14,34 @@ const primaryDict = {
     loginPulling: "下载数据库..."
   },
   dashboard: {
-    write: "写入",
-    read: "读取",
+    c: "C",
+    r: "R",
+    u: "U",
+    d: "D",
     recent: "最近30笔消耗品"
   },
   cat: {
-    index: "分类",
-    write: "写入",
+    c: "写入",
     key: "键",
     label: "值"
   },
-  write: {
+  c: {
     asset: "资产",
     consumable: "消耗",
     val: "数值",
     note: "注释",
     label: "标签",
     cat: "分类",
-    writeError: "写入失败"
+    writeError: "写入失败",
   },
-  read: {
+  r: {
     asset: "资产",
     consumable: "消耗",
     keyword: "关键字"
+  },
+  d: {
+    index: "数组索引",
+    remove: "移除"
   }
 };
 

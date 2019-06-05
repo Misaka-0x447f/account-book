@@ -4,13 +4,12 @@
       floating
         sw(@click="changeType")
           template(#consumable)
-            span {{e.write.consumable}}
+            span {{e.c.consumable}}
           template(#asset)
-            span {{e.write.asset}}
-        in(:label="e.read.keyword" @input="goSearch")
+            span {{e.c.asset}}
+        in(:label="e.r.keyword" @input="goSearch")
         csv(:obj="things")
-        bu(@click="back")
-          span {{e.global.back}}
+        back
 </template>
 <style lang="stylus" scoped>
 </style>
@@ -26,10 +25,12 @@
   import switcher from "@/components/input/switcher.vue";
   import {routerName} from "@/router";
   import button from "@/components/input/button.vue";
+  import back from "@/components/back.vue";
 
   export default Vue.extend({
-    name: "read",
+    name: "r",
     components: {
+      back,
       csv,
       sw: switcher,
       floating,

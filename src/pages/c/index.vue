@@ -4,23 +4,21 @@
       floating
         sw(@click="changeType")
           template(#consumable)
-            span {{e.write.consumable}}
+            span {{e.c.consumable}}
           template(#asset)
-            span {{e.write.asset}}
+            span {{e.c.asset}}
         .inputs(@input="someInput")
-          in(v-model="label" :label="e.write.label")
-          in(v-model="value" :label="e.write.val")
-          in(v-model="cat" :label="e.write.cat")
-          in(v-model="note" :label="e.write.note")
-        .cat
-          div {{e.cat.index}}
-          cat(:tp="tp")
+          in(v-model="label" :label="e.c.label")
+          in(v-model="value" :label="e.c.val")
+          in(v-model="cat" :label="e.c.cat")
+          in(v-model="note" :label="e.c.note")
         .buttons
-          bu(@click="back")
-            span {{e.global.back}}
+          back
           bu(@click="ok")
             span {{e.global.ok}}
-        .error(v-if="errorMsg !== ''") {{`${e.write.writeError}:${errorMsg}`}}
+        .error(v-if="errorMsg !== ''") {{`${e.c.writeError}:${errorMsg}`}}
+        .cat
+          cat(:tp="tp")
 </template>
 <style lang="stylus" scoped>
   .buttons
@@ -33,16 +31,17 @@
   import floating from "@/components/floating.vue";
   import input from "@/components/input/input.vue";
   import button from "@/components/input/button.vue";
-  import {routerName} from "@/router";
   import csv from "@/components/csv.vue";
   import {noUndefined} from "@/utils/assert";
   import cat from "@/components/cat.vue";
   import {Database} from "@/interfaces/db";
   import {write} from "@/utils/rec";
+  import back from "@/components/back.vue";
 
   export default Vue.extend({
-    name: "write-record",
+    name: "create",
     components: {
+      back,
       csv,
       cat,
       sw: switcher,
@@ -74,15 +73,12 @@
         this.type = v;
         this.errorMsg = "";
       },
-      back() {
-        this.$router.push({name: routerName.dashboard});
-      },
       async ok() {
         try {
           // @ts-ignore
           await write(this.tp, this.label, this.value, this.cat, this.note);
           // @ts-ignore
-          this.back();
+          this.$router.go(-1);
         } catch (e) {
           this.errorMsg = noUndefined(e.message);
           throw e;

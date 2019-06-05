@@ -6,6 +6,7 @@ import {readAll} from "@/utils/cat";
 import {state} from "@/utils/state";
 import {push} from "@/utils/db";
 import Fuse from "fuse.js";
+import {AssertionError} from "assert";
 
 export const write = async (type: keyof Database, label: string, value: string, category: string, note?: string) => {
   noUndefined(readAll(type)[category]);
@@ -43,7 +44,13 @@ export const search = (type: keyof Database, content: string) => {
   return c;
 };
 
-export const remove = async (type: keyof typeof state.cache, id: number) => {
-  state.cache[type].entry.splice(id, 1);
+export const remove = async (type: keyof typeof state.cache, id: string) => {
+  onlyNumeric(id);
+  const nu = parseInt(id, 10);
+  const o = state.cache[type].entry;
+  if (nu >= o.length) {
+    throw new AssertionError({message: "No such index in the record"});
+  }
+  o.splice(nu, 1);
   await push();
 };

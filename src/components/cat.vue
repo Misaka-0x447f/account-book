@@ -5,10 +5,12 @@
       in(:label="e.key" v-model="key")
       in(:label="e.label" v-model="label")
       .buttons
-        bu(@click="write") {{e.write}}
+        bu(@click="write") {{e.c}}
       .error(v-if="errorMsg !== ''") {{errorMsg}}
 </template>
 <style lang="stylus" scoped>
+  .container
+    margin: 2em 0;
 </style>
 <script lang="ts">
   import Vue from "vue";
