@@ -5,7 +5,8 @@ Vue.use(Router);
 
 export const routerName = {
   setup: "setup",
-  dashboard: "dashboard"
+  dashboard: "dashboard",
+  write: "write"
 };
 
 // noinspection JSUnusedGlobalSymbols
@@ -26,6 +27,11 @@ export default new Router({
       path: "/dashboard",
       name: routerName.dashboard,
       component: () => import("@/pages/dashboard/index.vue")
+    },
+    {
+      path: "/write",
+      name: routerName.write,
+      component: () => import("@/pages/write/index.vue")
     }
   ],
 });

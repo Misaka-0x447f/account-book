@@ -39,7 +39,11 @@ export class AZ {
     return this.helperMethodFactory("deleteBlobIfExists", container, blob);
   }
 
-  public doesBlobExist(container: string, blob: string) {
+  public doesBlobExist(container: string, blob: string): Promise<{
+    container: string,
+    exists: boolean,
+    name: string
+  }> {
     return this.helperMethodFactory("doesBlobExist", container, blob);
   }
 

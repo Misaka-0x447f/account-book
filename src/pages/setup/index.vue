@@ -11,6 +11,8 @@
           type="password"
         )
         .tip
+          span(v-if="status === 3") {{e.welcome.loginPulling}}
+          span(v-if="status === 2") {{e.welcome.loginInitial}}
           span(v-if="status === 1") {{e.welcome.loginRunning}}
           span(v-if="status === -1") {{e.welcome.loginFailure}}
           span(v-if="status === -2") {{e.welcome.loginInvalid}}
@@ -38,13 +40,13 @@
 <script lang="ts">
   // @/ is an alias to /src/
   import Vue from "vue";
-  import button from "@/components/button.vue";
+  import button from "@/components/input/button.vue";
   import floating from "@/components/floating.vue";
-  import input from "@/components/input.vue";
+  import input from "@/components/input/input.vue";
 
   import {e} from "@/utils/i18n";
   import {routerName} from "@/router";
-  import {config, validate} from "@/utils/db";
+  import {config, initialize, pull, validate} from "@/utils/db";
   import {azConnectStringSchema} from "@/interfaces";
 
   export default Vue.extend({
@@ -59,7 +61,7 @@
         e,
         val: "",
         loginTip: e.welcome.loginTip,
-        status: 0 // 1: connecting; 0: clear;
+        status: 0 // 3: pulling 2: initializing 1: connecting; 0: clear;
         // -1: failure; -2: incorrect format;
       };
     },
@@ -79,7 +81,11 @@
         this.status = 1;
         try {
           await validate(this.val);
-          this.status = 0;
+          config(this.val);
+          this.status = 2;
+          await initialize();
+          this.status = 3;
+          await pull();
           this.$router.push({name: routerName.dashboard});
         } catch (e) {
           this.status = -1;
