@@ -6,7 +6,8 @@ Vue.use(Router);
 export const routerName = {
   setup: "setup",
   dashboard: "dashboard",
-  write: "write"
+  write: "write",
+  read: "read"
 };
 
 // noinspection JSUnusedGlobalSymbols
@@ -32,6 +33,11 @@ export default new Router({
       path: "/write",
       name: routerName.write,
       component: () => import("@/pages/write/index.vue")
+    },
+    {
+      path: "/read",
+      name: routerName.read,
+      component: () => import("@/pages/read/index.vue")
     }
   ],
 });

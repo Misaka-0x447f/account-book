@@ -1,7 +1,7 @@
 const primaryDict = {
   global: {
     ok: "好",
-    back: "C"
+    back: "取消"
   },
   welcome: {
     welcome: "欢迎",
@@ -32,6 +32,11 @@ const primaryDict = {
     label: "标签",
     cat: "分类",
     writeError: "写入失败"
+  },
+  read: {
+    asset: "资产",
+    consumable: "消耗",
+    keyword: "关键字"
   }
 };
 

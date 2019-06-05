@@ -9,6 +9,7 @@
     "inspect-webpack-config": "vue-cli-service inspect > webpack-config-readable.txt"
   },
   "dependencies": {
+    "fuse.js": "^3.4.5",
     "lodash": "^4.17.11",
     "mongodb": "^3.2.5",
     "vue": "^2.6.10",

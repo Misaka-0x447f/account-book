@@ -1,10 +1,11 @@
-import {map, cloneDeep} from "lodash";
+import {cloneDeep, findLastIndex, map} from "lodash";
 import {getUnixTimestamp, timestampToTime} from "@/utils/lang";
 import {Database, Entry} from "@/interfaces/db";
 import {noEmptyString, noUndefined, onlyNumeric} from "@/utils/assert";
 import {readAll} from "@/utils/cat";
 import {state} from "@/utils/state";
 import {push} from "@/utils/db";
+import Fuse from "fuse.js";
 
 export const write = async (type: keyof Database, label: string, value: string, category: string, note?: string) => {
   noUndefined(readAll(type)[category]);
@@ -32,12 +33,12 @@ export const readLast30 = (type: keyof Database) => {
   return c;
 };
 
-export const readByLabel = (type: keyof Database, label: string) => {
+export const search = (type: keyof Database, content: string) => {
+  const o = state.cache[type].entry;
   const c: Entry[] = [];
-  map(state.cache[type].entry, (v: Entry, i: number) => {
-    if (v.label === label) {
-      c[i] = v;
-    }
+  const re = new Fuse(o, {keys: ["label", "note", "value"]}).search(content);
+  map(re, (v: Entry) => {
+    c[findLastIndex(o, (k) => k === v)] = v;
   });
   return c;
 };

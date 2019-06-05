@@ -3,7 +3,7 @@
     .container
       floating
         .buttons
-          bu(:enabled="false") {{e.dashboard.read}}
+          bu(@click="gotoRead") {{e.dashboard.read}}
           bu(@click="gotoWrite") {{e.dashboard.write}}
         div {{e.dashboard.recent}}
         csv(:obj="last")
@@ -39,6 +39,9 @@
     methods: {
       gotoWrite() {
         this.$router.push({name: routerName.write});
+      },
+      gotoRead() {
+        this.$router.push({name: routerName.read});
       }
     }
   });
