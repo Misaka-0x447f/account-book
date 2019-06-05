@@ -1,9 +1,18 @@
 import {state} from "@/utils/state";
-import {Database} from "@/interfaces/db";
+import {Database, Entry} from "@/interfaces/db";
 import {push} from "@/utils/db";
+import {map} from "lodash";
 
 export const write = async (type: keyof Database, key: string, label: string) => {
-  state.cache[type].category[key] = {label};
+  if (label === undefined) {
+    console.log(type);
+    map(state.cache[type].entry, (v: Entry) => {
+      if (v.category === key) {
+        v.category = undefined;
+      }
+    });
+  }
+  state.cache[type].category[key] = label;
   await push();
 };
 

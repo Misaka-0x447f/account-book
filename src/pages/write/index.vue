@@ -3,10 +3,10 @@
     .container
       floating
         sw(@click="changeType")
-          template(#asset)
-            span {{e.write.asset}}
           template(#consumable)
             span {{e.write.consumable}}
+          template(#asset)
+            span {{e.write.asset}}
         .inputs(@input="someInput")
           in(v-model="label" :label="e.write.label")
           in(v-model="value" :label="e.write.val")
@@ -63,7 +63,7 @@
     },
     computed: {
       tp() {
-        return noUndefined(["asset", "consumable"][this.type] as keyof Database);
+        return noUndefined(["consumable", "asset"][this.type] as keyof Database);
       }
     },
     methods: {
@@ -84,7 +84,7 @@
           // @ts-ignore
           this.back();
         } catch (e) {
-          this.errorMsg = noUndefined(e.write);
+          this.errorMsg = noUndefined(e.message);
           throw e;
         }
       }

@@ -14,9 +14,7 @@ export interface Entry {
 }
 
 interface Category {
-  [T: string]: {
-    label: string
-  };
+  [T: string]: string;
 }
 
 export interface Database {

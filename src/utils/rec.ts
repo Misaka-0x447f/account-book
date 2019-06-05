@@ -1,5 +1,5 @@
-import {map} from "lodash";
-import {getUnixTimestamp} from "@/utils/lang";
+import {map, cloneDeep} from "lodash";
+import {getUnixTimestamp, timestampToTime} from "@/utils/lang";
 import {Database, Entry} from "@/interfaces/db";
 import {noEmptyString, noUndefined, onlyNumeric} from "@/utils/assert";
 import {readAll} from "@/utils/cat";
@@ -21,12 +21,15 @@ export const write = async (type: keyof Database, label: string, value: string, 
 };
 
 export const readLast30 = (type: keyof Database) => {
-  const o = state.cache[type].entry;
+  const c = [];
+  const o = state.cache[type].entry as Entry[];
   const s = Math.max(o.length - 30, 0);
-  return {
-    obj: o.slice(s, o.length),
-    startAt: s
-  };
+  for (let i = o.length - 1; i >= s; i--) {
+    c[i] = cloneDeep(o[i]);
+    // @ts-ignore
+    c[i].timestamp = timestampToTime(c[i].timestamp);
+  }
+  return c;
 };
 
 export const readByLabel = (type: keyof Database, label: string) => {
