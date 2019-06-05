@@ -8,5 +8,6 @@ export const isNumeric = (n: any) => {
 };
 
 export const timestampToTime = (t: string) => {
-  return new Date(Math.floor(parseInt(t, 10) / 1000)).toString();
+  const o = new Date(Math.floor(parseInt(t, 10) / 1000));
+  return `${o.toLocaleString()}`;
 };
