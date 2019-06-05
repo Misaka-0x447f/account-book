@@ -14,7 +14,7 @@
           span(v-if="status === 3") {{e.welcome.loginPulling}}
           span(v-if="status === 2") {{e.welcome.loginInitial}}
           span(v-if="status === 1") {{e.welcome.loginRunning}}
-          span(v-if="status === -1") {{e.welcome.loginFailure}}
+          span(v-if="status === -1") {{`${e.welcome.loginFailure}${errMsg}`}}
           span(v-if="status === -2") {{e.welcome.loginInvalid}}
           span(v-else)
           but(inline :enabled="status <= 0" @click="clickHandler")
@@ -48,6 +48,7 @@
   import {routerName} from "@/router";
   import {config, initialize, pull, validate} from "@/utils/db";
   import {azConnectStringSchema} from "@/interfaces";
+  import {noUndefined} from "@/utils/assert";
 
   export default Vue.extend({
     name: "setup-index",
@@ -61,6 +62,7 @@
         e,
         val: "",
         loginTip: e.welcome.loginTip,
+        errMsg: "",
         status: 0 // 3: pulling 2: initializing 1: connecting; 0: clear;
         // -1: failure; -2: incorrect format;
       };
@@ -89,6 +91,7 @@
           this.$router.push({name: routerName.dashboard});
         } catch (e) {
           this.status = -1;
+          this.errMsg = noUndefined(e.message);
           throw e;
         }
       }

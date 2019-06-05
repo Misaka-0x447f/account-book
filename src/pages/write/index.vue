@@ -7,13 +7,20 @@
             span {{e.write.asset}}
           template(#consumable)
             span {{e.write.consumable}}
-        in(v-model="val" :label="e.write.val")
-        in(v-model="note" :label="e.write.note")
+        .inputs(@input="someInput")
+          in(v-model="label" :label="e.write.label")
+          in(v-model="value" :label="e.write.val")
+          in(v-model="cat" :label="e.write.cat")
+          in(v-model="note" :label="e.write.note")
+        .cat
+          div {{e.cat.index}}
+          cat(:tp="tp")
         .buttons
           bu(@click="back")
             span {{e.global.back}}
-          bu
+          bu(@click="ok")
             span {{e.global.ok}}
+        .error(v-if="errorMsg !== ''") {{`${e.write.writeError}:${errorMsg}`}}
 </template>
 <style lang="stylus" scoped>
   .buttons
@@ -27,10 +34,17 @@
   import input from "@/components/input/input.vue";
   import button from "@/components/input/button.vue";
   import {routerName} from "@/router";
+  import csv from "@/components/csv.vue";
+  import {noUndefined} from "@/utils/assert";
+  import cat from "@/components/cat.vue";
+  import {Database} from "@/interfaces/db";
+  import {write} from "@/utils/rec";
 
   export default Vue.extend({
-    name: "write",
+    name: "write-record",
     components: {
+      csv,
+      cat,
       sw: switcher,
       floating,
       in: input,
@@ -39,17 +53,40 @@
     data: () => {
       return {
         e,
-        type: -1,
-        val: "",
-        note: ""
+        type: 0,
+        label: "",
+        value: "",
+        cat: "",
+        note: "",
+        errorMsg: ""
       };
     },
+    computed: {
+      tp() {
+        return noUndefined(["asset", "consumable"][this.type] as keyof Database);
+      }
+    },
     methods: {
+      someInput() {
+        this.errorMsg = "";
+      },
       changeType(v: number) {
         this.type = v;
+        this.errorMsg = "";
       },
       back() {
         this.$router.push({name: routerName.dashboard});
+      },
+      async ok() {
+        try {
+          // @ts-ignore
+          await write(this.tp, this.label, this.value, this.cat, this.note);
+          // @ts-ignore
+          this.back();
+        } catch (e) {
+          this.errorMsg = noUndefined(e.write);
+          throw e;
+        }
       }
     }
   });

@@ -1,7 +1,5 @@
 export const container = "account-book-container";
 
-export const blobs: Array<keyof Database> = ["asset", "consumable"];
-
 interface Activity<T> {
   entry: T[];
   category: Category;
@@ -25,4 +23,3 @@ export interface Database {
   asset: Activity<Entry>;
   consumable: Activity<Entry>;
 }
-

@@ -1,9 +1,7 @@
 import {AZ} from "@/utils/az";
-import {isNull, isUndefined} from "lodash";
-import {blobs, container} from "@/interfaces/db";
-import {stringify} from "javascript-stringify";
-import * as assert from "assert";
-import {cache} from "@/utils/state";
+import {isNull} from "lodash";
+import {container, Database} from "@/interfaces/db";
+import {state} from "@/utils/state";
 
 export let az: null | AZ = null;
 
@@ -24,11 +22,9 @@ export const initialize = async () => {
     throw new Error("az is not defined");
   }
   await az.createContainerIfNotExists(container);
-  for (const v of blobs) {
-    if (!(await az.doesBlobExist(container, v)).exists) {
-      assert.notEqual(stringify(cache), undefined);
-      await az.createBlockBlobFromText(container, v, stringify(cache) as string);
-    }
+  if (!(await az.doesBlobExist(container, "db")).exists) {
+    state.cache = {asset: {entry: [], category: {}}, consumable: {entry: [], category: {}}} as Database;
+    await push();
   }
 };
 
@@ -36,26 +32,14 @@ export const pull = async () => {
   if (isNull(az)) {
     throw new Error("az is not defined");
   }
-  for (const i in cache) {
-    if (cache.hasOwnProperty(i)) {
-      // @ts-ignore
-      cache[i] = JSON.parse(await az.getBlobToText(container, what));
-    }
-  }
+  state.cache = JSON.parse(await az.getBlobToText(container, "db"));
 };
 
 export const push = async () => {
   if (isNull(az)) {
     throw new Error("az is not defined");
   }
-  for (const i in cache) {
-    if (cache.hasOwnProperty(i)) {
-      // @ts-ignore
-      const obj = stringify(cache[i]);
-      if (isUndefined(obj)) {
-        throw new Error("failed to stringify");
-      }
-      await az.createBlockBlobFromText(container, i, obj);
-    }
-  }
+  // @ts-ignore
+  const obj = JSON.stringify(state.cache);
+  await az.createBlockBlobFromText(container, "db", obj);
 };

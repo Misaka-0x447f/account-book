@@ -1,9 +1,16 @@
-import {cache} from "@/utils/state";
+import {state} from "@/utils/state";
+import {Database} from "@/interfaces/db";
+import {push} from "@/utils/db";
 
-export const write = (type: keyof typeof cache, key: string, label: string) => {
-  cache[type].category[key] = {label};
+export const write = async (type: keyof Database, key: string, label: string) => {
+  state.cache[type].category[key] = {label};
+  await push();
 };
 
-export const read = (type: keyof typeof cache, key: string) => {
-  return cache[type].category[key];
+export const read = (type: keyof Database, key: string) => {
+  return state.cache[type].category[key];
+};
+
+export const readAll = (type: keyof Database) => {
+  return state.cache[type].category;
 };

@@ -9,7 +9,6 @@
     "inspect-webpack-config": "vue-cli-service inspect > webpack-config-readable.txt"
   },
   "dependencies": {
-    "javascript-stringify": "^2.0.0",
     "lodash": "^4.17.11",
     "mongodb": "^3.2.5",
     "vue": "^2.6.10",
